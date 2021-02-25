@@ -1,29 +1,30 @@
-from requests_html import HTMLSession
+#from requests_html import HTMLSession
 from pygooglenews import GoogleNews
+from time import sleep
 
-# Interesting tool that might be helpful to use https://github.com/kotartemiy/pygooglenews
-
-# Testing template given on the github page
 gn = GoogleNews()
 
-search = gn.search('lockdown')
+# Function to get our search terms and parse the data
+def get_titles(search):
+  # Empty list to store acquired headlines
+  stories = []
 
-for item in search['entries']:
-  print(item['title'])
+  # Grab our search term and generate list based on our parameters
+  search = gn.search(search)
+  newsitem = search['entries']
+  for item in newsitem:
+    story = {
+        'title': item.title,
+        'link': item.link
+    }
+    # Add our criteria to the list
+    stories.append(story)
 
-# Template is clean and works well, will further improve
+  # Print the list of headlines and links
+  for section in stories:
+    print(f"{section['title']}:\n{section['link']}\n")
+    sleep(5)
+  return
 
-
-"""
-url = 'https://news.google.com/rss/search?q=lockdown'
-
-# Create our session
-s = HTMLSession()
-
-# Get the specified url
-r = s.get(url)
-
-# Testing title acquisition.
-for title in r.html.find('title'):
-  print(title.text)
-  """
+search = input('Enter keyword to search for: ')
+get_titles(search)
