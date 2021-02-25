@@ -20,11 +20,12 @@ def get_titles(search):
     # Add our criteria to the list
     stories.append(story)
 
-  # Print the list of headlines and links
+  # Print the list of headlines and links to be perused
   for section in stories:
     print(f"{section['title']}:\n{section['link']}\n")
     sleep(5)
   return
 
+# Function call and keyword request
 search = input('Enter keyword to search for: ')
 get_titles(search)
